@@ -1,35 +1,3 @@
-module "cpu_utilization_high_alarm_label" {
-  source     = "cloudposse/label/null"
-  version    = "0.25.0"
-  attributes = ["cpu", "utilization", "high"]
-
-  context = module.this.context
-}
-
-module "cpu_utilization_low_alarm_label" {
-  source     = "cloudposse/label/null"
-  version    = "0.25.0"
-  attributes = ["cpu", "utilization", "low"]
-
-  context = module.this.context
-}
-
-module "memory_utilization_high_alarm_label" {
-  source     = "cloudposse/label/null"
-  version    = "0.25.0"
-  attributes = ["memory", "utilization", "high"]
-
-  context = module.this.context
-}
-
-module "memory_utilization_low_alarm_label" {
-  source     = "cloudposse/label/null"
-  version    = "0.25.0"
-  attributes = ["memory", "utilization", "low"]
-
-  context = module.this.context
-}
-
 locals {
   thresholds = {
     CPUUtilizationHighThreshold    = min(max(var.cpu_utilization_high_threshold, 0), 100)
@@ -47,11 +15,19 @@ locals {
       "ClusterName" = var.cluster_name
     }
   }
+
+  cpu_utilization_high_alarm_actions    = length(var.default_sns_topics) > 0 ? concat(var.default_sns_topics, var.cpu_utilization_high_alarm_actions) : var.cpu_utilization_high_alarm_actions
+  cpu_utilization_high_ok_actions       = length(var.default_sns_topics) > 0 ? concat(var.default_sns_topics, var.cpu_utilization_high_ok_actions) : var.cpu_utilization_high_ok_actions
+  cpu_utilization_low_alarm_actions     = length(var.default_sns_topics) > 0 ? concat(var.default_sns_topics, var.cpu_utilization_low_alarm_actions) : var.cpu_utilization_low_alarm_actions
+  cpu_utilization_low_ok_actions        = length(var.default_sns_topics) > 0 ? concat(var.default_sns_topics, var.cpu_utilization_low_ok_actions) : var.cpu_utilization_low_ok_actions
+  memory_utilization_high_alarm_actions = length(var.default_sns_topics) > 0 ? concat(var.default_sns_topics, var.memory_utilization_high_alarm_actions) : var.memory_utilization_high_alarm_actions
+  memory_utilization_high_ok_actions    = length(var.default_sns_topics) > 0 ? concat(var.default_sns_topics, var.memory_utilization_high_ok_actions) : var.memory_utilization_high_ok_actions
+  memory_utilization_low_alarm_actions  = length(var.default_sns_topics) > 0 ? concat(var.default_sns_topics, var.memory_utilization_low_alarm_actions) : var.memory_utilization_low_alarm_actions
+  memory_utilization_low_ok_actions     = length(var.default_sns_topics) > 0 ? concat(var.default_sns_topics, var.memory_utilization_low_ok_actions) : var.memory_utilization_low_ok_actions
 }
 
 resource "aws_cloudwatch_metric_alarm" "cpu_utilization_high" {
-  count               = module.this.enabled ? 1 : 0
-  alarm_name          = module.cpu_utilization_high_alarm_label.id
+  alarm_name          = "${var.service_name}-cpu_utilization_high"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = var.cpu_utilization_high_evaluation_periods
   metric_name         = "CPUUtilization"
@@ -68,15 +44,14 @@ resource "aws_cloudwatch_metric_alarm" "cpu_utilization_high" {
     var.cpu_utilization_high_evaluation_periods
   )
 
-  alarm_actions = compact(var.cpu_utilization_high_alarm_actions)
-  ok_actions    = compact(var.cpu_utilization_high_ok_actions)
+  alarm_actions = compact(local.cpu_utilization_high_alarm_actions)
+  ok_actions    = compact(local.cpu_utilization_high_ok_actions)
 
   dimensions = local.dimensions_map[var.service_name == "" ? "cluster" : "service"]
 }
 
 resource "aws_cloudwatch_metric_alarm" "cpu_utilization_low" {
-  count               = module.this.enabled ? 1 : 0
-  alarm_name          = module.cpu_utilization_low_alarm_label.id
+  alarm_name          = "${var.service_name}-cpu_utilization_low"
   comparison_operator = "LessThanThreshold"
   evaluation_periods  = var.cpu_utilization_low_evaluation_periods
   metric_name         = "CPUUtilization"
@@ -93,15 +68,14 @@ resource "aws_cloudwatch_metric_alarm" "cpu_utilization_low" {
     var.cpu_utilization_low_evaluation_periods
   )
 
-  alarm_actions = compact(var.cpu_utilization_low_alarm_actions)
-  ok_actions    = compact(var.cpu_utilization_low_ok_actions)
+  alarm_actions = compact(local.cpu_utilization_low_alarm_actions)
+  ok_actions    = compact(local.cpu_utilization_low_ok_actions)
 
   dimensions = local.dimensions_map[var.service_name == "" ? "cluster" : "service"]
 }
 
 resource "aws_cloudwatch_metric_alarm" "memory_utilization_high" {
-  count               = module.this.enabled ? 1 : 0
-  alarm_name          = module.memory_utilization_high_alarm_label.id
+  alarm_name          = "${var.service_name}-memory_utilization_high"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = var.memory_utilization_high_evaluation_periods
   metric_name         = "MemoryUtilization"
@@ -118,15 +92,14 @@ resource "aws_cloudwatch_metric_alarm" "memory_utilization_high" {
     var.memory_utilization_high_evaluation_periods
   )
 
-  alarm_actions = compact(var.memory_utilization_high_alarm_actions)
-  ok_actions    = compact(var.memory_utilization_high_ok_actions)
+  alarm_actions = compact(local.memory_utilization_high_alarm_actions)
+  ok_actions    = compact(local.memory_utilization_high_ok_actions)
 
   dimensions = local.dimensions_map[var.service_name == "" ? "cluster" : "service"]
 }
 
 resource "aws_cloudwatch_metric_alarm" "memory_utilization_low" {
-  count               = module.this.enabled ? 1 : 0
-  alarm_name          = module.memory_utilization_low_alarm_label.id
+  alarm_name          = "${var.service_name}-memory_utilization_low"
   comparison_operator = "LessThanThreshold"
   evaluation_periods  = var.memory_utilization_low_evaluation_periods
   metric_name         = "MemoryUtilization"
@@ -143,8 +116,8 @@ resource "aws_cloudwatch_metric_alarm" "memory_utilization_low" {
     var.memory_utilization_low_evaluation_periods
   )
 
-  alarm_actions = compact(var.memory_utilization_low_alarm_actions)
-  ok_actions    = compact(var.memory_utilization_low_ok_actions)
+  alarm_actions = compact(local.memory_utilization_low_alarm_actions)
+  ok_actions    = compact(local.memory_utilization_low_ok_actions)
 
   dimensions = local.dimensions_map[var.service_name == "" ? "cluster" : "service"]
 }

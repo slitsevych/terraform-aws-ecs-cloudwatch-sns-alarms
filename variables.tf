@@ -6,7 +6,12 @@ variable "cluster_name" {
 variable "service_name" {
   type        = string
   description = "The name of the ECS Service in the ECS cluster to monitor"
-  default     = ""
+}
+
+variable "default_sns_topics" {
+  type        = list(string)
+  description = "A list of SNS topics (i.e. SNS Topic ARN) to notify to use for ALL ok and alarm actions"
+  default     = []
 }
 
 variable "alarm_description" {
@@ -24,13 +29,13 @@ variable "cpu_utilization_high_threshold" {
 variable "cpu_utilization_high_evaluation_periods" {
   type        = number
   description = "Number of periods to evaluate for the alarm"
-  default     = 1
+  default     = 2
 }
 
 variable "cpu_utilization_high_period" {
   type        = number
   description = "Duration in seconds to evaluate for the alarm"
-  default     = 300
+  default     = 180
 }
 
 variable "cpu_utilization_high_alarm_actions" {
@@ -54,13 +59,13 @@ variable "cpu_utilization_low_threshold" {
 variable "cpu_utilization_low_evaluation_periods" {
   type        = number
   description = "Number of periods to evaluate for the alarm"
-  default     = 1
+  default     = 2
 }
 
 variable "cpu_utilization_low_period" {
   type        = number
   description = "Duration in seconds to evaluate for the alarm"
-  default     = 300
+  default     = 180
 }
 
 variable "cpu_utilization_low_alarm_actions" {
@@ -84,13 +89,13 @@ variable "memory_utilization_high_threshold" {
 variable "memory_utilization_high_evaluation_periods" {
   type        = number
   description = "Number of periods to evaluate for the alarm"
-  default     = 1
+  default     = 2
 }
 
 variable "memory_utilization_high_period" {
   type        = number
   description = "Duration in seconds to evaluate for the alarm"
-  default     = 300
+  default     = 180
 }
 
 variable "memory_utilization_high_alarm_actions" {
@@ -114,13 +119,13 @@ variable "memory_utilization_low_threshold" {
 variable "memory_utilization_low_evaluation_periods" {
   type        = number
   description = "Number of periods to evaluate for the alarm"
-  default     = 1
+  default     = 2
 }
 
 variable "memory_utilization_low_period" {
   type        = number
   description = "Duration in seconds to evaluate for the alarm"
-  default     = 300
+  default     = 180
 }
 
 variable "memory_utilization_low_alarm_actions" {
