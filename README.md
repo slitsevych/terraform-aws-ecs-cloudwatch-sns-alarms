@@ -50,7 +50,7 @@ module "ecs_cloudwatch_sns_alarms" {
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 5.8.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.0 |
 
 ## Modules
 
@@ -102,6 +102,7 @@ No modules.
 | <a name="output_cpu_utilization_high_cloudwatch_metric_alarm_id"></a> [cpu\_utilization\_high\_cloudwatch\_metric\_alarm\_id](#output\_cpu\_utilization\_high\_cloudwatch\_metric\_alarm\_id) | CPU utilization high CloudWatch metric alarm ID |
 | <a name="output_cpu_utilization_low_cloudwatch_metric_alarm_arn"></a> [cpu\_utilization\_low\_cloudwatch\_metric\_alarm\_arn](#output\_cpu\_utilization\_low\_cloudwatch\_metric\_alarm\_arn) | CPU utilization low CloudWatch metric alarm ARN |
 | <a name="output_cpu_utilization_low_cloudwatch_metric_alarm_id"></a> [cpu\_utilization\_low\_cloudwatch\_metric\_alarm\_id](#output\_cpu\_utilization\_low\_cloudwatch\_metric\_alarm\_id) | CPU utilization low CloudWatch metric alarm ID |
+| <a name="output_ecs_alarms_list"></a> [ecs\_alarms\_list](#output\_ecs\_alarms\_list) | The list of all alarms |
 | <a name="output_memory_utilization_high_cloudwatch_metric_alarm_arn"></a> [memory\_utilization\_high\_cloudwatch\_metric\_alarm\_arn](#output\_memory\_utilization\_high\_cloudwatch\_metric\_alarm\_arn) | Memory utilization high CloudWatch metric alarm ARN |
 | <a name="output_memory_utilization_high_cloudwatch_metric_alarm_id"></a> [memory\_utilization\_high\_cloudwatch\_metric\_alarm\_id](#output\_memory\_utilization\_high\_cloudwatch\_metric\_alarm\_id) | Memory utilization high CloudWatch metric alarm ID |
 | <a name="output_memory_utilization_low_cloudwatch_metric_alarm_arn"></a> [memory\_utilization\_low\_cloudwatch\_metric\_alarm\_arn](#output\_memory\_utilization\_low\_cloudwatch\_metric\_alarm\_arn) | Memory utilization low CloudWatch metric alarm ARN |

@@ -6,11 +6,11 @@ locals {
 }
 
 provider "aws" {
-  region  = local.region
+  region = local.region
 }
 
 module "ecs_cloudwatch_sns_alarms" {
-  source       = "../"
+  source = "../"
 
   cluster_name = local.cluster_name
   service_name = local.service_name
