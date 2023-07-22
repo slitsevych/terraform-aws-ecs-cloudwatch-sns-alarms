@@ -27,7 +27,7 @@ locals {
 }
 
 resource "aws_cloudwatch_metric_alarm" "cpu_utilization_high" {
-  alarm_name          = "${var.service_name}-cpu_utilization_high"
+  alarm_name          = "${var.service_name}-ECS_service-CPU_utilization_High"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = var.cpu_utilization_high_evaluation_periods
   metric_name         = "CPUUtilization"
@@ -51,7 +51,7 @@ resource "aws_cloudwatch_metric_alarm" "cpu_utilization_high" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "cpu_utilization_low" {
-  alarm_name          = "${var.service_name}-cpu_utilization_low"
+  alarm_name          = "${var.service_name}-ECS_service-CPU_utilization_Low"
   comparison_operator = "LessThanThreshold"
   evaluation_periods  = var.cpu_utilization_low_evaluation_periods
   metric_name         = "CPUUtilization"
@@ -75,7 +75,7 @@ resource "aws_cloudwatch_metric_alarm" "cpu_utilization_low" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "memory_utilization_high" {
-  alarm_name          = "${var.service_name}-memory_utilization_high"
+  alarm_name          = "${var.service_name}-ECS_service-Memory_utilization_High"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = var.memory_utilization_high_evaluation_periods
   metric_name         = "MemoryUtilization"
@@ -99,7 +99,7 @@ resource "aws_cloudwatch_metric_alarm" "memory_utilization_high" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "memory_utilization_low" {
-  alarm_name          = "${var.service_name}-memory_utilization_low"
+  alarm_name          = "${var.service_name}-ECS_service-Memory_utilization_Low"
   comparison_operator = "LessThanThreshold"
   evaluation_periods  = var.memory_utilization_low_evaluation_periods
   metric_name         = "MemoryUtilization"
