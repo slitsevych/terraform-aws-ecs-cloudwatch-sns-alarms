@@ -16,7 +16,6 @@ locals {
   region       = "us-east-2"
   cluster_name = "my_cluster" # should already exist
   service_name = "my_service" # should already exist
-  sns_topic    = "arn:aws:sns:us-east-2:968521256074:devops-notifications"
 }
 
 provider "aws" {
@@ -29,7 +28,7 @@ module "sns" {
 }
 
 module "ecs_cloudwatch_sns_alarms" {
-  source       = ""
+  source       = "slitsevych/ecs-cloudwatch-sns-alarms/aws"
 
   cluster_name = local.cluster_name
   service_name = local.service_name
