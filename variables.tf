@@ -139,3 +139,9 @@ variable "memory_utilization_low_ok_actions" {
   description = "A list of ARNs (i.e. SNS Topic ARN) to notify on Memory Utilization Low OK action"
   default     = []
 }
+
+variable "tags" {
+  description = "A map of tags to add to all resources"
+  type        = map(any)
+  default     = {}
+}
